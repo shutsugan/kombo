@@ -19,12 +19,12 @@ npm start
 
 - use redux hooks to manage the state
 - created a loader animation
-- browser compatibil
-- used ES6
+- browser compatible
+- uses ES6
 
 ## Explaining
 
-I didn't use any lib because I try to keep the code light as possible,
+I didn't use any lib because I tried to keep the code light as possible,
 I added redux reducer and action using redux hooks,
 I re-styled the search bar and connected it with the API 
 if the request failed, an error notification will be displayed,
