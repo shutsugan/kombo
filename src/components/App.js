@@ -2,12 +2,15 @@ import React from "react";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 import Home from "./Home";
 import Search from "./Search";
+import Tickets from "./Tickets";
 
 import reducer from "./../store/reducers";
+
+import "../assets/scss/index.scss";
 
 const store = createStore(
   reducer,
@@ -19,10 +22,11 @@ const store = createStore(
 
 const App = _ => (
   <Provider store={store}>
-    <Router>
+    <BrowserRouter>
       <Route path="/" exact component={Home} />
       <Route path="/search/" component={Search} />
-    </Router>
+      <Route path="/result" component={Tickets} />
+    </BrowserRouter>
   </Provider>
 );
 
