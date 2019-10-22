@@ -1,54 +1,33 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-import {
-  FETCH_TICKETS,
-  FETCH_TICKETS_SUCCESS,
-  FETCH_TICKETS_FAILE,
-  FETCH_TICKETS_LOADING
-} from "../store/types";
+import { fetchTickets } from '../store/actions';
+
+import Notification from './Notification';
+import Loader from './Loader';
 
 import "../assets/scss/search.scss";
 
-const base_url = "https://interview.sobus.fr:8080/search";
-
 const Search = _ => {
-  const [departure, setDeparture] = useState("");
-  const [arrival, setArrival] = useState("");
-  const [date, setDate] = useState("");
+  const [departure, setDeparture] = useState('Marseille');
+  const [arrival, setArrival] = useState('Lyon');
+  const [date, setDate] = useState('14-05-19');
 
+  const success_message = useSelector(state => state.success_message);
+  const fail_message = useSelector(state => state.fail_message);
+  const loading = useSelector(state => state.loading);
+  
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
-
-    try {
-      dispatch({ type: FETCH_TICKETS_LOADING, payload: { loading: true } });
-      const { data } = await axios.post(base_url, {
-        date,
-        departure,
-        arrival
-      });
-
-      dispatch({
-        type: FETCH_TICKETS,
-        payload: { tickets: data.ticketsToRetrieve }
-      });
-      dispatch({
-        type: FETCH_TICKETS_SUCCESS,
-        payload: { success_message: data.message }
-      });
-    } catch (err) {
-      dispatch({
-        type: FETCH_TICKETS_FAILE,
-        payload: { fail_message: "Unable to fetch tichets" }
-      });
-    }
+    dispatch(fetchTickets(date, departure, arrival, _ => history.push("/result")));
   };
 
   return (
-    <section className="search-container">
+    <section className="search-container flex-col-center">
       <header className="search-header">
         <h1>Search Bar</h1>
       </header>
@@ -75,6 +54,9 @@ const Search = _ => {
           <input type="submit" value="search" onClick={handleSubmit} />
         </form>
       </div>
+      { success_message && <Notification message={success_message} success={true} /> }
+      { fail_message && <Notification message={fail_message} success={false} /> }
+      { loading && <Loader /> }
     </section>
   );
 };
