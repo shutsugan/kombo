@@ -1,0 +1,59 @@
+.notification {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	padding: 1rem;
+	border-radius: var(--radius);
+	font-size: .9rem;
+	transition: opacity var(--duration) var(--transition);
+	cursor: pointer;
+	text-align: center;
+
+	&:hover {
+		opacity: .7;
+	}
+
+	&.success {
+		color: var(--white);
+		background: var(--main);
+	}
+
+	&.fail {
+		background: var(--error);
+	}
+
+	@media only screen and (max-width : 480px) {
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: 1rem;
+		border-radius: 0;
+	}
+}
+
+.fade-appear {
+opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+	opacity: 1;
+	transition: opacity var(--duration) var(--transition);
+}
+
+.fade-enter {
+	opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+	opacity: 1;
+	transition: opacity var(--duration) var(--transition);
+}
+
+.fade-leave {
+	opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+opacity: 0.01;
+transition: opacity var(--duration) var(--transition);
+}
